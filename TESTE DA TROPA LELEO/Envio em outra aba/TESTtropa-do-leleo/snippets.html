@@ -104,19 +104,58 @@
   }
   .item{
     display:flex;
-    flex-direction:column;
-    gap:3px;
+    align-items:flex-start;
+    gap:10px;
     padding:12px 16px;
     cursor:pointer;
     border-bottom:1px solid rgba(255,255,255,0.06);
     transition: background .12s ease;
   }
+  .item .chk-item{ margin-top:3px; flex-shrink:0; cursor:pointer; }
+  .item .item-textos{ display:flex; flex-direction:column; gap:3px; min-width:0; flex:1; }
   .item:hover{ background:rgba(255,255,255,0.06); }
   .item.ativo{ background:var(--accent); }
   .item.ativo .item-shortcut{ color:#08281f; }
   .item.ativo .item-preview{ color:#0c2b23; }
   .item-shortcut{ font-size:13px; font-weight:700; color:var(--purple); }
   .item-preview{ font-size:12px; color:#d1d5db; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  .toolbar-selecao{
+    justify-content:space-between;
+    align-items:center;
+    padding-top:10px;
+    padding-bottom:10px;
+  }
+  .chk-todos-label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    color:#d1d5db;
+    cursor:pointer;
+    user-select:none;
+  }
+  .chk-todos-label input{ cursor:pointer; }
+  #btnApagarSelecionados{
+    background:transparent;
+    color:var(--danger);
+    border:1px solid var(--danger);
+    border-radius:6px;
+    padding:7px 12px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    white-space:nowrap;
+    transition: all .15s ease;
+  }
+  #btnApagarSelecionados:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+  }
+  #btnApagarSelecionados:not(:disabled):hover{
+    background:var(--danger);
+    color:#2d0b4e;
+  }
 
   #vazio{
     padding:40px 20px;
@@ -226,6 +265,13 @@
       <div class="toolbar">
         <input type="text" id="busca" placeholder="Buscar snippet ou atalho...">
         <button id="btnNovo">+ Novo</button>
+      </div>
+      <div class="toolbar toolbar-selecao">
+        <label class="chk-todos-label">
+          <input type="checkbox" id="chkTodos">
+          Selecionar todos
+        </label>
+        <button id="btnApagarSelecionados" disabled>🗑 Apagar selecionados (0)</button>
       </div>
       <div id="lista"></div>
     </div>
