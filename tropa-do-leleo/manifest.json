@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Tropa do Leleo - WhatsApp Quick Send",
+  "name": "CallCenter - TOOLS",
   "version": "1.4",
   "description": "Envia mensagens rápidas em grupos do WhatsApp Web com 1 clique.",
   "permissions": ["tabs", "scripting", "activeTab", "storage", "unlimitedStorage"],
