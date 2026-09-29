@@ -3,11 +3,15 @@ const STORAGE_KEY = "ccTools_snippets";
 let snippets = [];   // { id, atalho, titulo, conteudo }
 let ativoId = null;
 let filtro = "";
+let selecionados = new Set();
+let ultimosFiltrados = [];
 
 const $lista = document.getElementById("lista");
 const $busca = document.getElementById("busca");
 const $contagem = document.getElementById("contagem");
 const $btnNovo = document.getElementById("btnNovo");
+const $chkTodos = document.getElementById("chkTodos");
+const $btnApagarSelecionados = document.getElementById("btnApagarSelecionados");
 
 const $editorVazio = document.getElementById("editor-vazio");
 const $editorForm = document.getElementById("editor-form");
@@ -88,6 +92,7 @@ function renderLista() {
     vazio.id = "vazio";
     vazio.textContent = snippets.length ? "Nenhum snippet encontrado." : "Nenhum snippet ainda. Clique em + Novo para criar o primeiro.";
     $lista.appendChild(vazio);
+    atualizarBarraSelecao(filtrados);
     return;
   }
 
@@ -95,12 +100,47 @@ function renderLista() {
     const el = document.createElement("div");
     el.className = "item" + (s.id === ativoId ? " ativo" : "");
     const preview = (s.titulo ? s.titulo + " — " : "") + (s.conteudo || "").replace(/\n/g, " ");
-    el.innerHTML =
+
+    const chk = document.createElement("input");
+    chk.type = "checkbox";
+    chk.className = "chk-item";
+    chk.checked = selecionados.has(s.id);
+    chk.addEventListener("click", (e) => e.stopPropagation());
+    chk.addEventListener("change", () => {
+      if (chk.checked) selecionados.add(s.id);
+      else selecionados.delete(s.id);
+      atualizarBarraSelecao(filtrados);
+    });
+
+    const textos = document.createElement("div");
+    textos.className = "item-textos";
+    textos.innerHTML =
       '<div class="item-shortcut">' + escapeHtml(s.atalho) + '</div>' +
       '<div class="item-preview">' + escapeHtml(preview || "(vazio)") + '</div>';
+
+    el.appendChild(chk);
+    el.appendChild(textos);
     el.addEventListener("click", () => selecionar(s.id));
     $lista.appendChild(el);
   });
+
+  atualizarBarraSelecao(filtrados);
+}
+
+function atualizarBarraSelecao(filtrados) {
+  ultimosFiltrados = filtrados;
+  // Mantém no Set apenas ids que ainda existem
+  selecionados.forEach(id => {
+    if (!snippets.find(s => s.id === id)) selecionados.delete(id);
+  });
+
+  $btnApagarSelecionados.textContent = `🗑 Apagar selecionados (${selecionados.size})`;
+  $btnApagarSelecionados.disabled = selecionados.size === 0;
+
+  const idsVisiveis = filtrados.map(s => s.id);
+  const todosVisiveisSelecionados = idsVisiveis.length > 0 && idsVisiveis.every(id => selecionados.has(id));
+  $chkTodos.checked = todosVisiveisSelecionados;
+  $chkTodos.indeterminate = !todosVisiveisSelecionados && idsVisiveis.some(id => selecionados.has(id));
 }
 
 function escapeHtml(str) {
@@ -259,6 +299,35 @@ $inputImportar.addEventListener("change", () => {
 
 $btnExportar.addEventListener("click", exportar);
 $btnImportar.addEventListener("click", importar);
+
+// ===== Seleção em massa / apagar vários =====
+$chkTodos.addEventListener("change", () => {
+  if ($chkTodos.checked) {
+    ultimosFiltrados.forEach(s => selecionados.add(s.id));
+  } else {
+    ultimosFiltrados.forEach(s => selecionados.delete(s.id));
+  }
+  renderLista();
+});
+
+$btnApagarSelecionados.addEventListener("click", () => {
+  const qtd = selecionados.size;
+  if (!qtd) return;
+  const confirmMsg = qtd === 1
+    ? "Apagar o snippet selecionado?"
+    : `Apagar os ${qtd} snippets selecionados?`;
+  if (!confirm(confirmMsg)) return;
+
+  snippets = snippets.filter(s => !selecionados.has(s.id));
+  if (ativoId && selecionados.has(ativoId)) {
+    ativoId = null;
+    $editorForm.style.display = "none";
+    $editorVazio.style.display = "flex";
+  }
+  selecionados.clear();
+
+  salvarNoStorage(renderLista);
+});
 
 // Atalho de teclado: Ctrl/Cmd+S salva o snippet em edição
 document.addEventListener("keydown", (e) => {
