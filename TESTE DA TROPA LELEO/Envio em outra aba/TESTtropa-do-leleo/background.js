@@ -200,9 +200,9 @@ async function runHuaweiConfig() {
 // Atalhos de teclado continuam funcionando (Alt+Shift+P e Alt+Shift+O)
 chrome.commands.onCommand.addListener((command) => {
   if (command === "send-prox") {
-    runFlow("Foda-se Alares", "prox", "prox");
+    runFlow("Turma Call Tarde", "prox", "prox");
   } else if (command === "send-check") {
-    runFlow("Foda-se Alares", "\u2705", "check");
+    runFlow("Fila ligação", "\u2705", "check");
   }
 });
 
@@ -220,4 +220,38 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     runHuaweiConfig().then(sendResponse);
     return true; // resposta assíncrona
   }
+});
+
+// Popula a lista de snippets com o padrão da empresa na primeira vez que a
+// extensão é instalada/atualizada — só se o usuário ainda não tiver nenhum
+// snippet salvo, para nunca sobrescrever uma lista já personalizada.
+const SNIPPETS_STORAGE_KEY = "ccTools_snippets";
+
+function gerarIdSnippet() {
+  return "s_" + Date.now().toString(36) + "_" + Math.random().toString(36).slice(2, 8);
+}
+
+async function semearSnippetsPadrao() {
+  try {
+    const atual = await chrome.storage.local.get([SNIPPETS_STORAGE_KEY]);
+    const jaTemSnippets = Array.isArray(atual[SNIPPETS_STORAGE_KEY]) && atual[SNIPPETS_STORAGE_KEY].length > 0;
+    if (jaTemSnippets) return;
+
+    const resp = await fetch(chrome.runtime.getURL("assets/snippets-padrao.json"));
+    const dados = await resp.json();
+    const comIds = dados.map((item) => ({
+      id: gerarIdSnippet(),
+      atalho: item.atalho,
+      titulo: item.titulo || "",
+      conteudo: item.conteudo || ""
+    }));
+    await chrome.storage.local.set({ [SNIPPETS_STORAGE_KEY]: comIds });
+    console.log("[snippets] lista padrão carregada:", comIds.length, "itens");
+  } catch (e) {
+    console.error("[snippets] erro ao carregar lista padrão:", e);
+  }
+}
+
+chrome.runtime.onInstalled.addListener(() => {
+  semearSnippetsPadrao();
 });
