@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Callcenter - TOOLS",
+  "name": "TESTES TROPA DO LELEO",
   "version": "1.5",
   "description": "Envia mensagens rápidas em grupos do WhatsApp Web com 1 clique.",
   "permissions": ["tabs", "scripting", "activeTab", "storage", "unlimitedStorage"],
