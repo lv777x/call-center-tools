@@ -171,22 +171,4 @@
   }, true);
 
   console.log(TAG, "content script carregado em", location.href);
-
-  // Selo visual temporário (some sozinho) só para confirmar, sem precisar do Console,
-  // que o script foi injetado corretamente na página.
-  function mostrarSeloAtivo() {
-    try {
-      if (window.top !== window.self) return; // só no frame principal da página
-      var selo = document.createElement("div");
-      selo.textContent = "🟢 Snippets (Call Center Tools) ativo — " + Object.keys(snippetsMap).length + " atalho(s)";
-      selo.style.cssText = "position:fixed;bottom:14px;right:14px;z-index:2147483647;background:#2d0b4e;color:#42d3a5;border:1px solid #6c46b5;border-radius:8px;padding:8px 14px;font:12px/1.3 Arial,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.4);opacity:0;transition:opacity .25s ease;pointer-events:none;";
-      document.documentElement.appendChild(selo);
-      requestAnimationFrame(function () { selo.style.opacity = "1"; });
-      setTimeout(function () {
-        selo.style.opacity = "0";
-        setTimeout(function () { selo.remove(); }, 300);
-      }, 4000);
-    } catch (err) { /* ignora se a página bloquear a inserção */ }
-  }
-  setTimeout(mostrarSeloAtivo, 800);
 })();
