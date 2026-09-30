@@ -87,6 +87,9 @@ function fecharPaineisAbertos(tabId, callback) {
   });
 }
 
+document.getElementById("btnSenhaWifi").addEventListener("click", () => {
+chrome.tabs.create({ url: "https://oquei-decodificar.lovable.app/" });
+});
 // ==========================================
 // FUNÇÕES DOS BOTÕES DA TELA SECUNDÁRIA
 // ==========================================
