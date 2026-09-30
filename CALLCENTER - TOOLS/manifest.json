@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "CallCenter - TOOLS",
   "version": "1.4",
-  "description": "Envia mensagens rápidas em grupos do WhatsApp Web com 1 clique.",
+  "description": "Ferramenta para facilitar o trabalho do Call.",
   "permissions": ["tabs", "scripting", "activeTab", "storage", "unlimitedStorage"],
   "host_permissions": ["https://web.whatsapp.com/*"],
   "background": { "service_worker": "background.js" },
@@ -21,7 +21,7 @@
     "128": "icons/icon128.png"
   },
   "action": {
-    "default_title": "Tropa do Leleo",
+    "default_title": "CallCenter - TOOLS",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icons/icon16.png",
@@ -32,11 +32,11 @@
   },
   "commands": {
     "send-prox": {
-      "suggested_key": { "default": "Alt+Shift+P" },
+      "suggested_key": { "default": "Alt+P" },
       "description": "Enviar 'prox' no grupo Turma Call Tarde"
     },
     "send-check": {
-      "suggested_key": { "default": "Alt+Shift+O" },
+      "suggested_key": { "default": "Alt+L" },
       "description": "Enviar check no grupo Fila ligação"
     }
   }
