@@ -200,9 +200,9 @@ async function runHuaweiConfig() {
 // Atalhos de teclado continuam funcionando (Alt+Shift+P e Alt+Shift+O)
 chrome.commands.onCommand.addListener((command) => {
   if (command === "send-prox") {
-    runFlow("Turma Call Tarde", "prox", "prox");
+    runFlow("Foda-se Alares", "prox", "prox");
   } else if (command === "send-check") {
-    runFlow("Fila ligação", "\u2705", "check");
+    runFlow("Foda-se Alares", "\u2705", "check");
   }
 });
 
