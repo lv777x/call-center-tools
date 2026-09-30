@@ -67,6 +67,10 @@ document.getElementById("btnHuawei").addEventListener("click", () => {
   });
 });
 
+document.getElementById("btnSenhaWifi").addEventListener("click", () => {
+chrome.tabs.create({ url: "https://oquei-decodificar.lovable.app/" });
+});
+
 // ==========================================
 // PREVENÇÃO DE BUG (FECHAR TELAS SOBREPOSTAS)
 // ==========================================
