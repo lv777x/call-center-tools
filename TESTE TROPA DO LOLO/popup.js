@@ -66,7 +66,9 @@ document.getElementById("btnHuawei").addEventListener("click", () => {
     setTimeout(() => setStatus(""), 3000);
   });
 });
-
+document.getElementById("btnSenhaWifi").addEventListener("click", () => {
+chrome.tabs.create({ url: "https://oquei-decodificar.lovable.app/" });
+});
 // ==========================================
 // PREVENÇÃO DE BUG (FECHAR TELAS SOBREPOSTAS)
 // ==========================================
@@ -86,10 +88,6 @@ function fecharPaineisAbertos(tabId, callback) {
     if (callback) callback();
   });
 }
-
-document.getElementById("btnSenhaWifi").addEventListener("click", () => {
-chrome.tabs.create({ url: "https://oquei-decodificar.lovable.app/" });
-});
 // ==========================================
 // FUNÇÕES DOS BOTÕES DA TELA SECUNDÁRIA
 // ==========================================
