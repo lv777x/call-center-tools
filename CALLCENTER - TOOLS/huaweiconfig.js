@@ -29,9 +29,75 @@
         return null;
     }
 
+    // Igual ao find, mas busca por seletor CSS (documento principal + iframes)
+    function findAll(selector) {
+        let resultado = Array.prototype.slice.call(document.querySelectorAll(selector));
+        for (let f of document.querySelectorAll("iframe")) {
+            try {
+                let d = f.contentDocument || f.contentWindow.document;
+                resultado = resultado.concat(Array.prototype.slice.call(d.querySelectorAll(selector)));
+            } catch (err) {}
+        }
+        return resultado;
+    }
+
     function abreviar(texto) {
         if (!texto) return texto;
         return texto.replace(/PreSharedKey/gi, "PSK").replace(/&/g, "/");
+    }
+
+    // ---------- Leitura do sinal da fibra ----------
+    // Procura na tabela da página Optical a linha de potência de recepção (Rx).
+    // Se não achar pelo rótulo, usa a primeira célula "table_right" com dBm.
+    function lerSinalFibra() {
+        let celulas = findAll("td.table_right");
+        if (!celulas.length) return null;
+
+        let extrairNumero = function(txt) {
+            let m = (txt || "").replace(/\u00a0/g, " ").match(/-?\d+(?:[.,]\d+)?/);
+            return m ? m[0].replace(",", ".") : null;
+        };
+
+        // 1ª tentativa: linha cujo rótulo fala de recepção (Rx / Receive)
+        for (let i = 0; i < celulas.length; i++) {
+            let linha = celulas[i].parentElement;
+            let rotulo = linha ? (linha.textContent || "") : "";
+            if (/rx|receiv|recep/i.test(rotulo) && /pot|power|optical|óptic|optic/i.test(rotulo)) {
+                let n = extrairNumero(celulas[i].textContent);
+                if (n !== null) return n;
+            }
+        }
+
+        // 2ª tentativa: primeira célula que tenha "dBm"
+        for (let i = 0; i < celulas.length; i++) {
+            if (/dbm/i.test(celulas[i].textContent)) {
+                let n = extrairNumero(celulas[i].textContent);
+                if (n !== null) return n;
+            }
+        }
+
+        // 3ª tentativa: primeira célula com valor numérico
+        for (let i = 0; i < celulas.length; i++) {
+            let n = extrairNumero(celulas[i].textContent);
+            if (n !== null) return n;
+        }
+        return null;
+    }
+
+    async function capturarSinalFibra() {
+        clickElement(find("name_Systeminfo"));
+        await sleep(2500);
+        clickElement(find("name_opticinfo"));
+
+        // Aguarda a tabela carregar (até ~10s)
+        let t0 = Date.now();
+        while (Date.now() - t0 < 10000) {
+            await sleep(500);
+            let valor = lerSinalFibra();
+            if (valor !== null) return valor;
+        }
+        console.warn("[huawei] Não foi possível ler o sinal da fibra.");
+        return null;
     }
 
     function setSelect(id, value, label) {
@@ -94,11 +160,18 @@
         return "Habilitado " + m.label + ".";
     }
 
-    function montarRelato(mudancas) {
+    function montarRelato(mudancas, sinal) {
+        let linhaSinal = sinal !== null
+            ? "Sinal " + sinal + " dBm"
+            : "Sinal não identificado";
+
+        let corpo;
         if (!mudancas.length) {
-            return "Alterações feitas no roteador\n\nNenhuma alteração necessária, o roteador já estava configurado.";
+            corpo = "Alterações feitas no roteador\n\nNenhuma alteração necessária, o roteador já estava configurado.";
+        } else {
+            corpo = "Alterações feitas no roteador\n\n" + mudancas.map(formatarMudanca).join("\n");
         }
-        return "Alterações feitas no roteador\n\n" + mudancas.map(formatarMudanca).join("\n");
+        return linhaSinal + "\n\n" + corpo;
     }
 
     function mostrarToast(texto) {
@@ -188,6 +261,11 @@
         let mudancas = [];
 
         await sleep(3000);
+
+        // --- Sinal da fibra (System Information > Optical) ---
+        let sinal = await capturarSinalFibra();
+        await sleep(1000);
+
         clickElement(find("name_addconfig"));
 
         await sleep(4000);
@@ -239,7 +317,7 @@
 
         await sleep(5000);
 
-        let texto = montarRelato(mudancas);
+        let texto = montarRelato(mudancas, sinal);
         mostrarToast(texto);
         window.__huaweiConfigRunning = false;
     }
