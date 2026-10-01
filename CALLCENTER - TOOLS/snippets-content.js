@@ -66,6 +66,13 @@
     return el.textContent || "";
   }
 
+  // Converte marcadores de asterisco para <strong> e quebras de linha para <br>
+  function formatarSnippetParaHTML(texto) {
+      let formatado = texto.replace(/\*{1,2}([^*]+)\*{1,2}/g, '<strong>$1</strong>');
+      formatado = formatado.replace(/\n/g, '<br>');
+      return formatado;
+  }
+
   // Usa o setter nativo do input/textarea para que frameworks como React/Vue
   // (que sobrescrevem o setter padrão) também percebam a mudança de valor.
   function setValorNativo(el, texto) {
@@ -105,19 +112,34 @@
     el.focus();
 
     if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
-      setValorNativo(el, texto);
-      if (typeof el.setSelectionRange === "function") {
-        try { el.setSelectionRange(texto.length, texto.length); } catch (err) {}
-      }
+        // Inputs e Textareas comuns não suportam HTML visual, insere texto normal
+        setValorNativo(el, texto);
+        if (typeof el.setSelectionRange === "function") {
+            try { el.setSelectionRange(texto.length, texto.length); } catch (err) {}
+        }
     } else {
-      if (document.execCommand) {
-        document.execCommand("selectAll", false, null);
-        document.execCommand("insertText", false, texto);
-      } else {
-        el.textContent = texto;
-        el.dispatchEvent(new Event("input", { bubbles: true }));
-      }
-      moverCursorParaFinalContentEditable(el);
+        // Elementos ContentEditable (Rich Text / SZ.chat)
+        if (document.execCommand) {
+            document.execCommand("selectAll", false, null);
+            
+            const textoHTML = formatarSnippetParaHTML(texto);
+            
+            // Tenta inserir como HTML primeiro se houver modificações.
+            // Se o navegador barrar o insertHTML ou não for diferente, faz fallback no texto normal.
+            let sucessoHTML = false;
+            if (textoHTML !== texto) {
+                sucessoHTML = document.execCommand("insertHTML", false, textoHTML);
+            }
+            
+            if (!sucessoHTML) {
+                document.execCommand("insertText", false, texto);
+            }
+        } else {
+            // Fallback caso execCommand seja obsoleto no navegador futuro
+            el.innerHTML = formatarSnippetParaHTML(texto);
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+        moverCursorParaFinalContentEditable(el);
     }
 
     console.log(TAG, "snippet expandido.");
