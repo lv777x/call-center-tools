@@ -2,9 +2,9 @@ function setStatus(text) {
   document.getElementById("status").textContent = text;
 }
 
-function send(grupo, msg, tag) {
+function send(msg, tag) {
   setStatus("Enviando...");
-  chrome.runtime.sendMessage({ type: "runFlow", grupo, msg, tag }, (resp) => {
+  chrome.runtime.sendMessage({ type: "runFlow", msg, tag }, (resp) => {
     if (chrome.runtime.lastError) {
       setStatus("Erro: " + chrome.runtime.lastError.message);
       return;
@@ -39,12 +39,9 @@ document.getElementById("btn-voltar").addEventListener("click", () => {
 // ==========================================
 // FUNÇÕES DOS BOTÕES DA TELA PRINCIPAL
 // ==========================================
-document.getElementById("btnProx").addEventListener("click", () => {
-  send("Turma Call Tarde", "prox", "prox");
-});
 
 document.getElementById("btnCheck").addEventListener("click", () => {
-  send("Fila ligação", "\u2705", "check");
+  send("\u2705", "check");
 });
 
 document.getElementById("btnSnippets").addEventListener("click", () => {
@@ -118,4 +115,27 @@ document.getElementById("btn-mensagens").addEventListener("click", () => {
       window.close(); // Fecha a janelinha da extensão automaticamente
     });
   });
+});
+
+// ==========================================
+// VOLUME DO ÁUDIO DOS SNIPPETS
+// ==========================================
+const VOLUME_STORAGE_KEY = "ccTools_volume";
+const rangeVolume = document.getElementById("rangeVolume");
+const volumeValor = document.getElementById("volumeValor");
+
+function mostrarVolume(v) {
+  volumeValor.textContent = v + "%";
+}
+
+chrome.storage.local.get([VOLUME_STORAGE_KEY], (res) => {
+  const v = typeof res[VOLUME_STORAGE_KEY] === "number" ? res[VOLUME_STORAGE_KEY] : 70;
+  rangeVolume.value = v;
+  mostrarVolume(v);
+});
+
+rangeVolume.addEventListener("input", () => {
+  const v = Number(rangeVolume.value);
+  mostrarVolume(v);
+  chrome.storage.local.set({ [VOLUME_STORAGE_KEY]: v });
 });
