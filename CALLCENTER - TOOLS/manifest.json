@@ -1,17 +1,34 @@
 {
   "manifest_version": 3,
   "name": "CallCenter - TOOLS",
-  "version": "1.4",
+  "version": "1.7",
   "description": "Ferramenta para facilitar o trabalho do Call.",
-  "permissions": ["tabs", "scripting", "activeTab", "storage", "unlimitedStorage"],
-  "host_permissions": ["https://web.whatsapp.com/*"],
-  "background": { "service_worker": "background.js" },
+  "permissions": [
+    "tabs",
+    "scripting",
+    "activeTab",
+    "storage",
+    "unlimitedStorage",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "https://chat.oquei.com.br/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["snippets-content.js"],
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "snippets-content.js"
+      ],
       "run_at": "document_idle",
-      "all_frames": true
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
     }
   ],
   "icons": {
@@ -32,12 +49,16 @@
   },
   "commands": {
     "send-prox": {
-      "suggested_key": { "default": "Alt+P" },
-      "description": "Enviar 'prox' no grupo Turma Call Tarde"
+      "suggested_key": {
+        "default": "Alt+P"
+      },
+      "description": "Enviar 'prox' no grupo rodizio_ligacoes_callcenter_tarde"
     },
     "send-check": {
-      "suggested_key": { "default": "Alt+L" },
-      "description": "Enviar check no grupo Fila ligação"
+      "suggested_key": {
+        "default": "Alt+L"
+      },
+      "description": "Enviar ✅ no grupo rodizio_ligacoes_callcenter_tarde"
     }
   }
 }
