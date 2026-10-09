@@ -287,7 +287,7 @@ const SNIPPETS_STORAGE_KEY = "ccTools_snippets";
 const PADRAO_IGNORADOS_KEY = "ccTools_padrao_ignorados";
 const PADRAO_MIGRADO_KEY = "ccTools_padrao_migrado";
 const PADRAO_STATUS_KEY = "ccTools_padrao_status";
-const SNIPPETS_PADRAO_URL = "https://raw.githubusercontent.com/lv777x/call-center-tools/main/snippets-padrao.json";
+const SNIPPETS_PADRAO_URL = "https://raw.githubusercontent.com/lv777x/call-center-tools/main/CALLCENTER%20-%20TOOLS/assets/snippets-padrao.json";
 const SYNC_ALARM = "syncSnippetsPadrao";
 const SYNC_INTERVALO_MIN = 60;
 
