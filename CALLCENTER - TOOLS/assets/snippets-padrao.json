@@ -1,102 +1,222 @@
-[
-  {
-    "atalho": "/enc",
-    "titulo": "Encerramento",
-    "conteudo": "Esse é seu número de *protocolo* de atendimento: \n\nCaso tiver alguma dúvida pode retornar o contato conosco, nosso suporte é 24 Horas. Tenha uma ótima tarde!"
-  },
-  {
-    "atalho": "/inat",
-    "titulo": "Inatividade",
-    "conteudo": "Esse é seu número de *protocolo* de atendimento: \n\nPor falta de contato estarei encerrando o seu atendimento por inatividade! Caso tenha alguma dúvida pode retornar o contato a qualquer momento, nosso suporte é 24 horas! Tenha uma ótima tarde! "
-  },
-  {
-    "atalho": "/lent",
-    "titulo": "Lentidão",
-    "conteudo": "Para entender melhor o problema, preciso de algumas informações:\nEm qual aparelho a lentidão ocorre? Celular, TV ou Computador?\nQuais aplicativos apresentam o problema?\nPor exemplo:\n    No Celular: YouTube, Netflix, Instagram?\n    Na TV: YouTube, streaming, canais abertos?\n    No Computador: Quais sites nota o problema? Utiliza algum sistema?\nCaso seja na TV, utiliza TV Box (Aparelho de Canais) ou aplicativo instalado diretamente? Se for TV ou Computador, a conexão é via cabo ou Wi-Fi?"
-  },
-  {
-    "atalho": "/quedas",
-    "titulo": "Oscilação/Quedas",
-    "conteudo": "Para verificarmos as oscilações e quedas na conexão, poderia nos informar:\n   Em quais dispositivos o problema ocorre (Computador, Celular, TV, etc.)?\n   Se for no computador ou na TV, eles estão conectados via Wi-Fi ou cabo de rede?\n   Se for no celular, as quedas acontecem mesmo próximo ao roteador? Qual é o modelo do aparelho celular que está utilizando agora e notando as quedas?\nPedimos também, por favor, que envie um print da tela do Wi-Fi, mostrando a rede à qual está conectado.\n"
-  },
-  {
-    "atalho": "/visita",
-    "titulo": "Visita Técnica (Outros)",
-    "conteudo": "Como a situação ainda não foi resolvida, será aberta uma solicitação para visita técnica a fim de verificar e solucionar o problema.\n\nEm breve será realizado contato para realizar o agendamento, conforme disponibilidade, alinhando a melhor data e horário para atendimento.\n\nAjudo com algo mais de momento?"
-  },
-  {
-    "atalho": "/los",
-    "titulo": "Linkloss Visita",
-    "conteudo": "Verifiquei que sua conexão não voltou a funcionar, sendo assim vai ser necessário encaminhar uma visita técnica no local, pois pode ter acontecido um possível rompimento na sua fibra e será necessário uma manutenção. \n\nO setor responsável pelos técnicos vão retornar o contato assim que possível para efetuar o agendamento e combinar o período e dia da visita, lembrando que clientes sem conexão tem total prioridade nos atendimentos para que seja solucionado o quanto antes. \n\nConsigo ajudar com algo mais de momento?"
-  },
-  {
-    "atalho": "/banda",
-    "titulo": "Teste de Banda",
-    "conteudo": "A sua conexão possui duas redes Wi-Fi: 2.4 GHz e 5 GHz, e cada uma tem características diferentes:\n   2.4 GHz: maior alcance e melhor desempenho ao atravessar paredes, porém com velocidades menores e mais sujeita a interferências. Em celulares e notebooks, normalmente entrega entre 20 e 60 Mbps, podendo variar conforme o aparelho e o ambiente.\n   5 GHz: menor alcance, porém maior velocidade e mais estabilidade quando próximo ao roteador.\nPara medir corretamente a velocidade contratada, o ideal é realizar o teste em um computador com porta Gigabit, conectado via cabo de rede, pois assim eliminamos as limitações do Wi-Fi.\nCaso o teste seja feito pelo Wi-Fi, recomendamos:\n   Reiniciar o dispositivo antes do teste;\n   Conectar à rede 5 GHz;\n   Ficar próximo ao roteador;\n   Evitar outros aparelhos utilizando a internet no momento do teste.\nÉ importante lembrar que, no caso do celular, a velocidade também pode ser limitada pela placa de rede (Wi-Fi) do próprio aparelho, pois cada modelo possui um limite máximo de conexão. Além disso, no Wi-Fi a banda é compartilhada entre todos os dispositivos conectados, o que pode fazer com que a velocidade não atinja o total contratado."
-  },
-  {
-    "atalho": "/cordao",
-    "titulo": "Teste do Cordão",
-    "conteudo": "Identificamos um possível rompimento da fibra.\n\nPor favor, verifique em seus equipamentos se você encontra o cabo de fibra óptica. Geralmente, ele é um cabo fino na cor amarela, com a ponta verde ou azul.\n\n📌 Onde localizar o cabo:\nSe o seu roteador tiver duas antenas, o cabo estará conectado na parte de baixo do roteador.\nSe o roteador tiver mais de duas antenas, o cabo estará conectado ao modem (aparelho menor, sem antenas).\n🔧 Procedimento:\nRetire o cabo com cuidado.\nAguarde 10 segundos.\nConecte o cabo novamente no equipamento."
-  },
-  {
-    "atalho": "/wan",
-    "titulo": "Cabo WAN/LAN",
-    "conteudo": "Verifique se o cabo que sai da entrada WAN do roteador está conectado na entrada LAN do modem, caso o cabo estiver conectado corretamente faça a inversão das pontas, ou seja, coloque o cabo que está na LAN do modem na entrada WAN do roteador e o que antes estava na WAN do roteador vai ficar conectado na LAN do modem. \n\nMe informe assim que finalizar esse procedimento."
-  },
-  {
-    "atalho": "/box",
-    "titulo": "TV BOX",
-    "conteudo": "Os aparelhos e aplicativos de abertura de canais funcionam conectados a servidores estrangeiros que, por não serem homologados nem autorizados pela ANATEL no Brasil, podem apresentar instabilidades frequentes. Por isso, travamentos e lentidão são comuns e nem sempre estão relacionados apenas à qualidade da internet do cliente. \n\nAlém disso, quando o aparelho ou aplicativo está desatualizado, esses problemas podem ocorrer com ainda mais frequência, sendo recomendado entrar em contato com o fornecedor para verificar possíveis atualizações.\n\nTambém é importante destacar que o uso de TV Box pode representar riscos ao cliente, tanto por questões de segurança quanto pela falta de regulamentação, podendo expor dados pessoais e a rede doméstica a vulnerabilidades.\n\nPara comparar, é possível observar o funcionamento de aplicativos oficiais, como o YouTube no celular: quando a internet está estável, eles normalmente não apresentam travamentos, pois utilizam servidores homologados e tecnologias que reduzem perda de pacotes e instabilidades. Isso mostra que, muitas vezes, o problema não está na conexão de internet, mas sim no serviço e nos servidores utilizados pelo aparelho ou aplicativo de canais."
-  },
-  {
-    "atalho": "/giga",
-    "titulo": "Porta Giga",
-    "conteudo": "1º Clique em: Windows + r \n2º Escreva no campo que abrir: ncpa.cpl \n3º Clique em: enter \n4º Clique duas vezes na opção: Ethernet \n5º Verifica o que está constando na opção: velocidade (se está mostrando a 100mb ou 1Gb) "
-  },
-  {
-    "atalho": "/servico",
-    "titulo": "Solicitação de Serviço",
-    "conteudo": "Como é uma solicitação de serviço é cobrado R$50,00 reais da visita dos técnicos + R$40,00 reais caso os técnicos passem de uma hora no local, + os materiais utilizados para o cabeamento que geralmente é o cabo de rede, que custa R$3,00 reais o metro e as ponteiras, que geralmente usam duas e custa R$2,00 reais cada uma."
-  },
-  {
-    "atalho": "/endereco",
-    "titulo": "Mudança de Endereço",
-    "conteudo": "📌 Dados do solicitante\nNome de quem está solicitando:\nTelefone para contato:\n📍 Novo endereço\nRua:\nNúmero:\nBairro:\nCidade:\nComplemento (se houver):\nCEP:\nLocalização (ponto de referência ou localização pelo WhatsApp):\nℹ️ Informações importantes\nO equipamento já está no novo endereço?\nJá se mudou para o novo local?\n💳 Taxa de mudança\nEscolha uma das opções abaixo:\n ( ) À vista – R$100,00 pagos no ato da instalação\n ( ) No cartão – R$100,00 em até 3x\n ( ) No boleto – R$50,00 no ato da instalação + 2 boletos de R$40,00\n------ATENÇÃO! RENOVAÇÃO DE FIDELIDADE APENAS CLIENTES ACIMA DE 6 MESES DE CONTRATO ATIVO, REMOVER ESSA INFORMAÇÃO ANTES DE ENCAMINHAR AO CLIENTE---------\n ( ) Renovação de Fidelidade por 12 meses para isenção da taxa de mudança."
-  },
-  {
-    "atalho": "/titular",
-    "titulo": "Mudança de Titularidade",
-    "conteudo": "Para darmos andamento à solicitação de troca de titularidade, por favor, nos envie as seguintes informações:\n\n📌 Dados de quem entrou em contato\nNome:\nTelefone para contato:\n📝 Informações sobre a troca\nMotivo da troca de titularidade:\nAutorização expressa do atual titular: (pode ser em mensagem escrita ou áudio confirmando a autorização):\n👤 Dados do novo titular\nNome completo:\nData de nascimento:\nCPF:\nRG:\nFoto do documento (RG ou CNH) frente e verso:\nTelefone:\nE-mail:\n📍 Endereço\nO serviço permanecerá no mesmo endereço? ( ) Sim ( ) Não"
-  },
-  {
-    "atalho": "/c1",
-    "titulo": "Dia do Corte",
-    "conteudo": "‼️ATENÇÃO‼️\n\nCaso seu contato seja referente ao seu desbloqueio de confiança me informa seu CPF e a previsão de pagamento e aguarde por gentileza que dentro de alguns minutos estarei verificando.\n\nApós o desbloqueio de confiança ser feito ele tem duração de 3 dias! Pode demorar até 10 minutos para que a conexão seja reestabelecida, se após esse tempo não voltar deve reiniciar o roteador da tomada e aguardar mais 5 minutos, se ainda sim a falta de conexão permanecer pode retornar o contato conosco. \n\nOBS: CASO JÁ TENHA EFETUADO O PAGAMENTO VIA PIX AGUARDE 10 MINUTOS, SE FOI PAGO VIA BOLETO ME ENCAMINHE O COMPROVANTE PARA QUE SEJA VERIFICADO. "
-  },
-  {
-    "atalho": "/notas",
-    "titulo": "Nota Fiscal",
-    "conteudo": "Gostaríamos de esclarecer que:\n\nO valor cobrado na sua fatura refere-se somente ao serviço de internet (Fibra 600 Mb).\nOs demais serviços são cortesias incluídas no plano, não geram cobrança extra e podem ser utilizados ou não, conforme sua preferência.\nNa Nota Fiscal, é obrigatório informar cada item separadamente, com seus respectivos valores, apenas para fins fiscais e de registro.\nEsses valores não são somados ao total cobrado e não alteram o valor do seu plano.\n\nOu seja, a Nota Fiscal apresenta o detalhamento dos serviços do combo, mas a cobrança efetiva é somente da internet.\n\nFicamos à disposição para qualquer esclarecimento adicional."
-  },
-  {
-    "atalho": "/tv",
-    "titulo": "Oquei TV",
-    "conteudo": "*ABAIXO ESTÁ SEU USUÁRIO E SENHA PARA ACESSAR O OQUEI TV!*\n\nUSUÁRIO: \nSENHA: \n\nPasso a passo para acessar Oquei TV\n*Acesso pela Smart TV*\n\nBaixe o aplicativo CDN TV na loja de aplicativos da sua TV\n\nAbra o aplicativo CDN TV\n\n*No campo \"Provedor\", pesquise por tv.oquei.com.br*\n\nPreencha os campos de Usuário e Senha com seus dados de acesso\n\nClique em Entrar para começar a assistir\n\nAcesso pelo celular\n\nBaixe o aplicativo Oquei TV na loja de aplicativos do seu celular (Google Play ou App Store)\n\nAbra o aplicativo\n\nFaça login com seu usuário e senha\n\nAcesso pelo computador\n\nAcesse o site tv.oquei.com.br pelo navegador\n\nFaça login com seu usuário e senha para assistir ao conteúdo"
-  },
-  {
-    "atalho": "/globo",
-    "titulo": "Globoplay",
-    "conteudo": "*ATIVAÇÃO DA CONTA GLOBOPLAY*\n\nVerifique sua caixa de entrada do e-mail que foi cadastrado conosco.\n\nProcure um e-mail enviado por CeletiHUB (verifique também a pasta Spam/Lixo Eletrônico caso não encontre).\n\nAbra o e-mail e clique no botão de *ATIVAR!*\n\nApós ativar, deve aparecer um botão *\"Começar\"* — clique para ir à tela de login/registro.\n\nQuando a tela de login aparecer, selecione a opção *\"Criar uma conta\".*\n\nPreencha os dados solicitados em seguida para criar a conta.\n\nApós isso já pode baixar o aplicativo do GloboPlay no seu celular e na TV.\n\nDICA: Deixe salvo seu e-mail e senha para evitar problemas de acesso futuramente caso precise logar em outros dispositivos."
-  },
-  {
-    "atalho": "/deezer",
-    "titulo": "Deezer",
-    "conteudo": "Vou te enviar um link de ativação no seu Whatsapp e Email cadastrados, pode clicar nesse link e colocar o CPF do titular e ativar.\n\nEm seguida caso não tenha uma conta cadastrada, vai ser necessário cadastrar uma conta com email e senha, caso contrário pode ir direto na opção de login e usar o seu email e senha que já utilizava anteriormente. "
-  },
-  {
-    "atalho": "/saude",
-    "titulo": "Oquei Saúde",
-    "conteudo": "Baixe o aplicativo chamado Mediquo, em seguida faça o login com SMS ou sua conta GMAIL, selecione a opção \"Tenho um código de ativação\", caso não aparecer essa opção e entrar direto na conta, pode ir na opção do \"Perfil\" e selecionar \"Ativar plano premium\" e inserir o código abaixo:\n"
+// Expande snippets configurados na dashboard assim que o atalho fica
+// completo — igual ao Text Blaze: intercepta ANTES do caractere ser
+// inserido (evento "beforeinput"), então é instantâneo e não disputa
+// com o framework do próprio site (WhatsApp, SZ.chat, etc.).
+// Funciona em qualquer site: <input>, <textarea> e "contenteditable".
+(function () {
+  var STORAGE_KEY = "ccTools_snippets";
+  var TAG = "[CCTools Snippets]";
+  var snippetsMap = {};
+  var bloqueado = false;
+  var ultimoElExpandido = null;
+  var ultimoTempoExpandido = 0;
+  var COOLDOWN_MS = 500;
+
+  function carregar() {
+    if (!window.chrome || !chrome.storage || !chrome.storage.local) {
+      console.warn(TAG, "chrome.storage indisponível — recarregue a extensão e dê F5 na página.");
+      return;
+    }
+    chrome.storage.local.get([STORAGE_KEY], function (res) {
+      var arr = Array.isArray(res[STORAGE_KEY]) ? res[STORAGE_KEY] : [];
+      snippetsMap = {};
+      arr.forEach(function (s) {
+        if (s && s.atalho) snippetsMap[s.atalho.toLowerCase()] = s.conteudo || "";
+      });
+      console.log(TAG, "atalhos carregados:", Object.keys(snippetsMap));
+    });
   }
-]
+  carregar();
+
+  if (window.chrome && chrome.storage && chrome.storage.onChanged) {
+    chrome.storage.onChanged.addListener(function (changes, area) {
+      if (area === "local" && changes[STORAGE_KEY]) carregar();
+    });
+  }
+
+  var TIPOS_INPUT_VALIDOS = ["text", "search", "email", "url", "tel", "number", ""];
+
+  function elementoEhEditavel(el) {
+    if (!el || !el.tagName) return false;
+    var tag = el.tagName;
+    if (tag === "TEXTAREA") return true;
+    if (tag === "INPUT") {
+      var tipo = (el.type || "text").toLowerCase();
+      return TIPOS_INPUT_VALIDOS.indexOf(tipo) !== -1;
+    }
+    return !!el.isContentEditable;
+  }
+
+  function getRaizEditavel(el) {
+    if (!el) return null;
+    if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") return el;
+    var cur = el;
+    while (cur) {
+      if (cur.getAttribute && cur.getAttribute("contenteditable") === "true") return cur;
+      cur = cur.parentElement;
+    }
+    return el.isContentEditable ? el : null;
+  }
+
+  function getTextoAntesDoCursor(el) {
+    if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
+      return (el.value || "").substring(0, el.selectionStart);
+    } else {
+      var sel = window.getSelection();
+      if (sel.rangeCount > 0) {
+        var range = sel.getRangeAt(0);
+        if (range.startContainer.nodeType === 3) {
+          return range.startContainer.nodeValue.substring(0, range.startOffset);
+        }
+        return range.startContainer.textContent;
+      }
+    }
+    return "";
+  }
+
+  function formatarSnippetParaHTML(texto) {
+      let formatado = texto.replace(/\*{1,2}([^*]+)\*{1,2}/g, '<strong>$1</strong>');
+      formatado = formatado.replace(/\n/g, '<br>');
+      return formatado;
+  }
+
+  function setValorNativo(el, texto) {
+    var proto = el.tagName === "TEXTAREA" ? window.HTMLTextAreaElement.prototype : window.HTMLInputElement.prototype;
+    var descritor = Object.getOwnPropertyDescriptor(proto, "value");
+    if (descritor && descritor.set) {
+      descritor.set.call(el, texto);
+    } else {
+      el.value = texto;
+    }
+    el.dispatchEvent(new Event("input", { bubbles: true }));
+    el.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+
+  function moverCursorParaFinalContentEditable(el) {
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  // ATUALIZADO: Usando charsToApagar em vez de chave
+  function expandir(el, textoSnippet, charsToApagar) {
+    var agora = Date.now();
+    if (el === ultimoElExpandido && (agora - ultimoTempoExpandido) < COOLDOWN_MS) {
+      console.log(TAG, "expansão duplicada ignorada (cooldown).");
+      return;
+    }
+    ultimoElExpandido = el;
+    ultimoTempoExpandido = agora;
+
+    bloqueado = true;
+    el.focus();
+
+    if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
+        var cursor = el.selectionStart || 0;
+        var valAtual = el.value || "";
+        var textoAntes = valAtual.substring(0, cursor);
+        var textoDepois = valAtual.substring(cursor);
+
+        // Remove a exata quantidade de caracteres do atalho
+        if (charsToApagar > 0) {
+            textoAntes = textoAntes.slice(0, -charsToApagar);
+        }
+
+        setValorNativo(el, textoAntes + textoSnippet + textoDepois);
+        
+        if (typeof el.setSelectionRange === "function") {
+            var novaPos = textoAntes.length + textoSnippet.length;
+            try { el.setSelectionRange(novaPos, novaPos); } catch (err) {}
+        }
+    } else {
+        var sel = window.getSelection();
+        if (sel.rangeCount > 0 && document.execCommand) {
+            var range = sel.getRangeAt(0);
+            var textNode = range.startContainer;
+            
+            if (textNode.nodeType === 3 && charsToApagar > 0) {
+                var offset = range.startOffset;
+                var textoAntes = textNode.nodeValue.substring(0, offset);
+                
+                textNode.nodeValue = textoAntes.slice(0, -charsToApagar) + textNode.nodeValue.slice(offset);
+                range.setStart(textNode, offset - charsToApagar);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+            
+            const textoHTML = formatarSnippetParaHTML(textoSnippet);
+            let sucessoHTML = false;
+            
+            if (textoHTML !== textoSnippet) {
+                sucessoHTML = document.execCommand("insertHTML", false, textoHTML);
+            }
+            if (!sucessoHTML) {
+                document.execCommand("insertText", false, textoSnippet);
+            }
+        } else {
+            el.innerHTML = formatarSnippetParaHTML(textoSnippet);
+            el.dispatchEvent(new Event("input", { bubbles: true }));
+            moverCursorParaFinalContentEditable(el);
+        }
+    }
+
+    console.log(TAG, "snippet expandido.");
+    setTimeout(function () { bloqueado = false; }, 0);
+  }
+
+  function bateComAtalho(texto) {
+    var textoMin = (texto || "").toLowerCase();
+    var chaveEncontrada = null;
+    Object.keys(snippetsMap).forEach(function(chave) {
+        if (textoMin.endsWith(chave)) {
+            chaveEncontrada = chave;
+        }
+    });
+    return chaveEncontrada;
+  }
+
+  function aoBeforeInput(e) {
+    if (bloqueado) return;
+    var raiz = getRaizEditavel(e.target);
+    if (!raiz || !elementoEhEditavel(raiz)) return;
+    if (e.inputType !== "insertText" && e.inputType !== "insertCompositionText") return;
+    if (!e.data) return;
+
+    var textoAtual = getTextoAntesDoCursor(raiz);
+    var textoFinal = textoAtual + e.data;
+    var chave = bateComAtalho(textoFinal);
+    if (!chave) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Calcula os caracteres a apagar
+    var charsToApagar = Math.max(0, chave.length - e.data.length);
+    expandir(raiz, snippetsMap[chave], charsToApagar);
+  }
+
+  function aoInputOuKeyup(e) {
+    if (bloqueado) return;
+    var raiz = getRaizEditavel(e.target);
+    if (!raiz || !elementoEhEditavel(raiz)) return;
+    
+    var textoAtual = getTextoAntesDoCursor(raiz);
+    var chave = bateComAtalho(textoAtual);
+    if (!chave) return;
+    
+    // Apaga a chave inteira se for apanhado pelo keyup
+    expandir(raiz, snippetsMap[chave], chave.length);
+  }
+
+  window.addEventListener("beforeinput", aoBeforeInput, true);
+  window.addEventListener("input", aoInputOuKeyup, true);
+  window.addEventListener("keyup", function (e) {
+    if (e.key && e.key.length === 1) aoInputOuKeyup(e);
+  }, true);
+
+  console.log(TAG, "content script carregado em", location.href);
+})();
