@@ -58,7 +58,6 @@
     return el.isContentEditable ? el : null;
   }
 
-  // NOVA FUNÇÃO: Captura estritamente o texto do início do campo até onde o cursor está piscando
   function getTextoAntesDoCursor(el) {
     if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
       return (el.value || "").substring(0, el.selectionStart);
@@ -102,8 +101,8 @@
     sel.addRange(range);
   }
 
-  // ATUALIZADO: Recebe a 'chave' que ativou o snippet para saber exatamente o que apagar
-  function expandir(el, textoSnippet, chave) {
+  // ATUALIZADO: Usando charsToApagar em vez de chave
+  function expandir(el, textoSnippet, charsToApagar) {
     var agora = Date.now();
     if (el === ultimoElExpandido && (agora - ultimoTempoExpandido) < COOLDOWN_MS) {
       console.log(TAG, "expansão duplicada ignorada (cooldown).");
@@ -121,9 +120,9 @@
         var textoAntes = valAtual.substring(0, cursor);
         var textoDepois = valAtual.substring(cursor);
 
-        // Remove apenas os caracteres referentes ao atalho colado no final da string antes do cursor
-        if (textoAntes.toLowerCase().endsWith(chave)) {
-            textoAntes = textoAntes.slice(0, -chave.length);
+        // Remove a exata quantidade de caracteres do atalho
+        if (charsToApagar > 0) {
+            textoAntes = textoAntes.slice(0, -charsToApagar);
         }
 
         setValorNativo(el, textoAntes + textoSnippet + textoDepois);
@@ -133,24 +132,20 @@
             try { el.setSelectionRange(novaPos, novaPos); } catch (err) {}
         }
     } else {
-        // ContentEditable (Rich Text / SZ.chat / WhatsApp)
         var sel = window.getSelection();
         if (sel.rangeCount > 0 && document.execCommand) {
             var range = sel.getRangeAt(0);
             var textNode = range.startContainer;
             
-            // Remove o atalho do DOM antes de injetar o conteúdo real
-            if (textNode.nodeType === 3) {
+            if (textNode.nodeType === 3 && charsToApagar > 0) {
                 var offset = range.startOffset;
                 var textoAntes = textNode.nodeValue.substring(0, offset);
                 
-                if (textoAntes.toLowerCase().endsWith(chave)) {
-                    textNode.nodeValue = textoAntes.slice(0, -chave.length) + textNode.nodeValue.slice(offset);
-                    range.setStart(textNode, offset - chave.length);
-                    range.collapse(true);
-                    sel.removeAllRanges();
-                    sel.addRange(range);
-                }
+                textNode.nodeValue = textoAntes.slice(0, -charsToApagar) + textNode.nodeValue.slice(offset);
+                range.setStart(textNode, offset - charsToApagar);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
             }
             
             const textoHTML = formatarSnippetParaHTML(textoSnippet);
@@ -173,7 +168,6 @@
     setTimeout(function () { bloqueado = false; }, 0);
   }
 
-  // ATUALIZADO: Verifica se a string atual TERMINA com uma das chaves configuradas
   function bateComAtalho(texto) {
     var textoMin = (texto || "").toLowerCase();
     var chaveEncontrada = null;
@@ -192,14 +186,17 @@
     if (e.inputType !== "insertText" && e.inputType !== "insertCompositionText") return;
     if (!e.data) return;
 
-    // Concatena a última letra ao que já existe ATÉ o cursor
-    var textoFinal = getTextoAntesDoCursor(raiz) + e.data;
+    var textoAtual = getTextoAntesDoCursor(raiz);
+    var textoFinal = textoAtual + e.data;
     var chave = bateComAtalho(textoFinal);
     if (!chave) return;
 
     e.preventDefault();
     e.stopPropagation();
-    expandir(raiz, snippetsMap[chave], chave);
+    
+    // Calcula os caracteres a apagar
+    var charsToApagar = Math.max(0, chave.length - e.data.length);
+    expandir(raiz, snippetsMap[chave], charsToApagar);
   }
 
   function aoInputOuKeyup(e) {
@@ -211,7 +208,8 @@
     var chave = bateComAtalho(textoAtual);
     if (!chave) return;
     
-    expandir(raiz, snippetsMap[chave], chave);
+    // Apaga a chave inteira se for apanhado pelo keyup
+    expandir(raiz, snippetsMap[chave], chave.length);
   }
 
   window.addEventListener("beforeinput", aoBeforeInput, true);
