@@ -108,5 +108,10 @@
     "atalho": "/sc",
     "titulo": "Sem contato",
     "conteudo": "Sem contato com a cliente, chamei no chat"
+  }, 
+  {
+    "atalho": "/mometto",
+    "titulo": "Sem contato",
+    "conteudo": "O soldado protetor do call center"
   }
 ]
