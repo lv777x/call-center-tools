@@ -7,10 +7,10 @@
   var STORAGE_KEY = "ccTools_snippets";
   var TAG = "[CCTools Snippets]";
   var snippetsMap = {};
-  var bloqueado = false; // evita reentrância síncrona durante nossa própria expansão
+  var bloqueado = false;
   var ultimoElExpandido = null;
   var ultimoTempoExpandido = 0;
-  var COOLDOWN_MS = 500; // trava contra dupla expansão (ex: beforeinput + input do mesmo site)
+  var COOLDOWN_MS = 500;
 
   function carregar() {
     if (!window.chrome || !chrome.storage || !chrome.storage.local) {
@@ -47,9 +47,6 @@
     return !!el.isContentEditable;
   }
 
-  // Sobe até achar a raiz "contenteditable=true" real (não um filho que só
-  // herdou a propriedade), para pegarmos o texto completo do campo mesmo
-  // quando o evento chega em um <span>/<p> interno do editor do site.
   function getRaizEditavel(el) {
     if (!el) return null;
     if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") return el;
@@ -61,20 +58,29 @@
     return el.isContentEditable ? el : null;
   }
 
-  function getValor(el) {
-    if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") return el.value || "";
-    return el.textContent || "";
+  // NOVA FUNÇÃO: Captura estritamente o texto do início do campo até onde o cursor está piscando
+  function getTextoAntesDoCursor(el) {
+    if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
+      return (el.value || "").substring(0, el.selectionStart);
+    } else {
+      var sel = window.getSelection();
+      if (sel.rangeCount > 0) {
+        var range = sel.getRangeAt(0);
+        if (range.startContainer.nodeType === 3) {
+          return range.startContainer.nodeValue.substring(0, range.startOffset);
+        }
+        return range.startContainer.textContent;
+      }
+    }
+    return "";
   }
 
-  // Converte marcadores de asterisco para <strong> e quebras de linha para <br>
   function formatarSnippetParaHTML(texto) {
       let formatado = texto.replace(/\*{1,2}([^*]+)\*{1,2}/g, '<strong>$1</strong>');
       formatado = formatado.replace(/\n/g, '<br>');
       return formatado;
   }
 
-  // Usa o setter nativo do input/textarea para que frameworks como React/Vue
-  // (que sobrescrevem o setter padrão) também percebam a mudança de valor.
   function setValorNativo(el, texto) {
     var proto = el.tagName === "TEXTAREA" ? window.HTMLTextAreaElement.prototype : window.HTMLInputElement.prototype;
     var descritor = Object.getOwnPropertyDescriptor(proto, "value");
@@ -96,11 +102,9 @@
     sel.addRange(range);
   }
 
-  function expandir(el, texto) {
+  // ATUALIZADO: Recebe a 'chave' que ativou o snippet para saber exatamente o que apagar
+  function expandir(el, textoSnippet, chave) {
     var agora = Date.now();
-    // Trava definitiva: se este mesmo campo já expandiu um snippet há pouco
-    // (menos de COOLDOWN_MS), ignora — evita colar a frase 2x quando mais de
-    // um listener (beforeinput/input/keyup) detecta o mesmo atalho.
     if (el === ultimoElExpandido && (agora - ultimoTempoExpandido) < COOLDOWN_MS) {
       console.log(TAG, "expansão duplicada ignorada (cooldown).");
       return;
@@ -112,50 +116,75 @@
     el.focus();
 
     if (el.tagName === "TEXTAREA" || el.tagName === "INPUT") {
-        // Inputs e Textareas comuns não suportam HTML visual, insere texto normal
-        setValorNativo(el, texto);
+        var cursor = el.selectionStart || 0;
+        var valAtual = el.value || "";
+        var textoAntes = valAtual.substring(0, cursor);
+        var textoDepois = valAtual.substring(cursor);
+
+        // Remove apenas os caracteres referentes ao atalho colado no final da string antes do cursor
+        if (textoAntes.toLowerCase().endsWith(chave)) {
+            textoAntes = textoAntes.slice(0, -chave.length);
+        }
+
+        setValorNativo(el, textoAntes + textoSnippet + textoDepois);
+        
         if (typeof el.setSelectionRange === "function") {
-            try { el.setSelectionRange(texto.length, texto.length); } catch (err) {}
+            var novaPos = textoAntes.length + textoSnippet.length;
+            try { el.setSelectionRange(novaPos, novaPos); } catch (err) {}
         }
     } else {
-        // Elementos ContentEditable (Rich Text / SZ.chat)
-        if (document.execCommand) {
-            document.execCommand("selectAll", false, null);
+        // ContentEditable (Rich Text / SZ.chat / WhatsApp)
+        var sel = window.getSelection();
+        if (sel.rangeCount > 0 && document.execCommand) {
+            var range = sel.getRangeAt(0);
+            var textNode = range.startContainer;
             
-            const textoHTML = formatarSnippetParaHTML(texto);
+            // Remove o atalho do DOM antes de injetar o conteúdo real
+            if (textNode.nodeType === 3) {
+                var offset = range.startOffset;
+                var textoAntes = textNode.nodeValue.substring(0, offset);
+                
+                if (textoAntes.toLowerCase().endsWith(chave)) {
+                    textNode.nodeValue = textoAntes.slice(0, -chave.length) + textNode.nodeValue.slice(offset);
+                    range.setStart(textNode, offset - chave.length);
+                    range.collapse(true);
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+                }
+            }
             
-            // Tenta inserir como HTML primeiro se houver modificações.
-            // Se o navegador barrar o insertHTML ou não for diferente, faz fallback no texto normal.
+            const textoHTML = formatarSnippetParaHTML(textoSnippet);
             let sucessoHTML = false;
-            if (textoHTML !== texto) {
+            
+            if (textoHTML !== textoSnippet) {
                 sucessoHTML = document.execCommand("insertHTML", false, textoHTML);
             }
-            
             if (!sucessoHTML) {
-                document.execCommand("insertText", false, texto);
+                document.execCommand("insertText", false, textoSnippet);
             }
         } else {
-            // Fallback caso execCommand seja obsoleto no navegador futuro
-            el.innerHTML = formatarSnippetParaHTML(texto);
+            el.innerHTML = formatarSnippetParaHTML(textoSnippet);
             el.dispatchEvent(new Event("input", { bubbles: true }));
+            moverCursorParaFinalContentEditable(el);
         }
-        moverCursorParaFinalContentEditable(el);
     }
 
     console.log(TAG, "snippet expandido.");
     setTimeout(function () { bloqueado = false; }, 0);
   }
 
+  // ATUALIZADO: Verifica se a string atual TERMINA com uma das chaves configuradas
   function bateComAtalho(texto) {
-    var chave = (texto || "").trim().toLowerCase();
-    if (!chave || chave.charAt(0) !== "/") return null;
-    return Object.prototype.hasOwnProperty.call(snippetsMap, chave) ? chave : null;
+    var textoMin = (texto || "").toLowerCase();
+    var chaveEncontrada = null;
+    Object.keys(snippetsMap).forEach(function(chave) {
+        if (textoMin.endsWith(chave)) {
+            chaveEncontrada = chave;
+        }
+    });
+    return chaveEncontrada;
   }
 
-  // MÉTODO PRINCIPAL: intercepta o caractere ANTES de ele ser inserido pelo
-  // navegador/site. Assim que o texto atual + o caractere prestes a entrar
-  // formam um atalho salvo, cancelamos a digitação nativa e já expandimos —
-  // instantâneo, sem disputa com o framework da página.
   function aoBeforeInput(e) {
     if (bloqueado) return;
     var raiz = getRaizEditavel(e.target);
@@ -163,29 +192,28 @@
     if (e.inputType !== "insertText" && e.inputType !== "insertCompositionText") return;
     if (!e.data) return;
 
-    var textoFinal = getValor(raiz) + e.data;
+    // Concatena a última letra ao que já existe ATÉ o cursor
+    var textoFinal = getTextoAntesDoCursor(raiz) + e.data;
     var chave = bateComAtalho(textoFinal);
     if (!chave) return;
 
     e.preventDefault();
     e.stopPropagation();
-    expandir(raiz, snippetsMap[chave]);
+    expandir(raiz, snippetsMap[chave], chave);
   }
 
-  // MÉTODO DE REFORÇO: alguns sites/navegadores não disparam 'beforeinput'
-  // de forma confiável (ex: certas IMEs, autopreenchimentos). Confere de
-  // novo depois que o caractere já foi inserido, como rede de segurança.
   function aoInputOuKeyup(e) {
     if (bloqueado) return;
     var raiz = getRaizEditavel(e.target);
     if (!raiz || !elementoEhEditavel(raiz)) return;
-    var chave = bateComAtalho(getValor(raiz));
+    
+    var textoAtual = getTextoAntesDoCursor(raiz);
+    var chave = bateComAtalho(textoAtual);
     if (!chave) return;
-    expandir(raiz, snippetsMap[chave]);
+    
+    expandir(raiz, snippetsMap[chave], chave);
   }
 
-  // Registrado em "window" (o nível mais alto da fase de captura) para
-  // rodar antes de qualquer listener que o próprio site adicione.
   window.addEventListener("beforeinput", aoBeforeInput, true);
   window.addEventListener("input", aoInputOuKeyup, true);
   window.addEventListener("keyup", function (e) {
