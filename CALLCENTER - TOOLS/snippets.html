@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Snippets — Call Center Tools</title>
+<style>
+  :root{
+    --bg1: #2d0b4e;
+    --bg2: #7b2ff7;
+    --btn: #45d8b7;
+    --btn-hover: #42a5cc;
+    --text: #f3ebff;
+    --panel: linear-gradient(145deg, #4a2c82, #29154f);
+    --border: #6c46b5;
+    --accent: #42d3a5;
+    --purple: #a88be8;
+    --danger: #f87171;
+  }
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    min-height:100vh;
+    background: url('assets/background.webp') center center / cover no-repeat fixed, var(--bg1);
+    font-family:"Segoe UI", Arial, sans-serif;
+    color:var(--text);
+  }
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px 28px;
+    background: rgba(45,11,78,0.85);
+    border-bottom:1px solid var(--border);
+    backdrop-filter: blur(4px);
+  }
+  header .brand{ display:flex; align-items:center; gap:12px; }
+  header .brand img{ height:34px; }
+  header h1{ font-size:18px; margin:0; font-weight:600; letter-spacing:.3px; }
+  header .contagem{ font-size:12px; opacity:.75; margin-top:2px; }
+  .header-acoes{ display:flex; gap:8px; }
+  .botao-header{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:8px 13px;
+    font-size:12.5px;
+    font-weight:600;
+    cursor:pointer;
+    transition: all .15s ease;
+    white-space:nowrap;
+  }
+  .botao-header:hover{ background:var(--accent); color:#08281f; border-color:var(--accent); }
+
+  main{
+    display:flex;
+    height:calc(100vh - 68px);
+  }
+
+  /* ===== Sidebar (lista) ===== */
+  #sidebar{
+    width:340px;
+    min-width:280px;
+    background: rgba(20,6,38,0.55);
+    border-right:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+  }
+  #sidebar .toolbar{
+    padding:14px;
+    display:flex;
+    gap:8px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  #busca{
+    flex:1;
+    background:rgba(0,0,0,0.25);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:9px 12px;
+    color:#fff;
+    font-size:13px;
+    outline:none;
+  }
+  #busca:focus{ border-color:var(--accent); }
+  #btnNovo{
+    background:var(--btn);
+    color:#0c2b23;
+    border:none;
+    border-radius:6px;
+    padding:9px 14px;
+    font-weight:700;
+    font-size:13px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition: background .15s ease;
+  }
+  #btnNovo:hover{ background:var(--btn-hover); color:#fff; }
+
+  #lista{
+    flex:1;
+    overflow-y:auto;
+    padding:6px 0;
+  }
+  .item{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px 16px;
+    cursor:pointer;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    transition: background .12s ease;
+  }
+  .item .chk-item{ margin-top:3px; flex-shrink:0; cursor:pointer; }
+  .item .item-textos{ display:flex; flex-direction:column; gap:3px; min-width:0; flex:1; }
+  .item:hover{ background:rgba(255,255,255,0.06); }
+  .item.ativo{ background:var(--accent); }
+  .item.ativo .item-shortcut{ color:#08281f; }
+  .item.ativo .item-preview{ color:#0c2b23; }
+  .item-shortcut{ font-size:13px; font-weight:700; color:var(--purple); }
+  .tag-padrao{ display:inline-block; margin-left:6px; padding:1px 6px; border-radius:8px; font-size:10px; font-weight:600; color:var(--accent); border:1px solid var(--accent); vertical-align:middle; }
+  .item.ativo .tag-padrao{ color:#08281f; border-color:#08281f; }
+  #avisoPadrao{ display:none; margin-bottom:14px; padding:8px 10px; border-radius:8px; font-size:12px; line-height:1.4; border:1px solid var(--accent); opacity:.9; }
+  #statusSync{ font-size:11px; opacity:.6; margin-top:2px; }
+  .item-preview{ font-size:12px; color:#d1d5db; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  .toolbar-selecao{
+    justify-content:space-between;
+    align-items:center;
+    padding-top:10px;
+    padding-bottom:10px;
+  }
+  .chk-todos-label{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    color:#d1d5db;
+    cursor:pointer;
+    user-select:none;
+  }
+  .chk-todos-label input{ cursor:pointer; }
+  #btnApagarSelecionados{
+    background:transparent;
+    color:var(--danger);
+    border:1px solid var(--danger);
+    border-radius:6px;
+    padding:7px 12px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    white-space:nowrap;
+    transition: all .15s ease;
+  }
+  #btnApagarSelecionados:disabled{
+    opacity:.35;
+    cursor:not-allowed;
+  }
+  #btnApagarSelecionados:not(:disabled):hover{
+    background:var(--danger);
+    color:#2d0b4e;
+  }
+
+  #vazio{
+    padding:40px 20px;
+    text-align:center;
+    font-size:13px;
+    color:#c9bce6;
+    opacity:.8;
+  }
+
+  /* ===== Editor ===== */
+  #editor{
+    flex:1;
+    padding:28px 34px;
+    overflow-y:auto;
+  }
+  #editor-vazio{
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    opacity:.7;
+    gap:10px;
+  }
+  #editor-vazio img{ height:70px; opacity:.5; }
+
+  .campo{ margin-bottom:18px; max-width:640px; }
+  .campo label{
+    display:block;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    color:var(--purple);
+    margin-bottom:6px;
+    font-weight:700;
+  }
+  .campo input, .campo textarea{
+    width:100%;
+    background:rgba(0,0,0,0.25);
+    border:1px solid var(--border);
+    border-radius:7px;
+    padding:11px 14px;
+    color:#fff;
+    font-size:14px;
+    outline:none;
+    font-family:inherit;
+    transition: border-color .15s ease;
+  }
+  .campo input:focus, .campo textarea:focus{ border-color:var(--accent); }
+  .campo textarea{ min-height:220px; resize:vertical; line-height:1.5; }
+  .linha-audio{ display:flex; gap:8px; }
+  .linha-audio select{
+    flex:1;
+    background:rgba(0,0,0,0.25);
+    border:1px solid var(--border);
+    border-radius:7px;
+    padding:11px 14px;
+    color:#fff;
+    font-size:14px;
+    outline:none;
+    font-family:inherit;
+  }
+  .linha-audio select option{ background:#29154f; color:#fff; }
+  #btnTestarAudio{
+    background:transparent;
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:7px;
+    padding:0 16px;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    transition: all .15s ease;
+  }
+  #btnTestarAudio:hover{ background:var(--accent); color:#08281f; border-color:var(--accent); }
+  .dica{ font-size:11px; color:#c9bce6; margin-top:6px; opacity:.8; }
+
+  .acoes{ display:flex; gap:10px; margin-top:24px; max-width:640px; }
+  .acoes button{
+    padding:11px 20px;
+    border-radius:7px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition: all .15s ease;
+  }
+  #btnSalvar{ background:var(--accent); color:#08281f; }
+  #btnSalvar:hover{ filter:brightness(1.1); }
+  #btnExcluir{ background:transparent; color:var(--danger); border-color:var(--danger); }
+  #btnExcluir:hover{ background:var(--danger); color:#2d0b4e; }
+
+  #msgSalvo{
+    display:inline-flex;
+    align-items:center;
+    font-size:13px;
+    color:var(--accent);
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+
+  footer{
+    text-align:center;
+    font-size:11px;
+    opacity:.55;
+    padding:10px;
+  }
+
+  ::-webkit-scrollbar{ width:8px; }
+  ::-webkit-scrollbar-thumb{ background:var(--border); border-radius:4px; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <img src="assets/alares.png" alt="Logo Alares">
+      <div>
+        <h1>Snippets — Mensagens Rápidas</h1>
+        <div class="contagem" id="contagem">0 snippets salvos</div>
+        <div id="statusSync"></div>
+      </div>
+    </div>
+    <div class="header-acoes">
+      <button id="btnSincronizar" class="botao-header" title="Buscar a lista padrão atualizada no GitHub (seus snippets não são alterados)">🔄 Atualizar padrão</button>
+      <button id="btnExportar" class="botao-header" title="Baixar todos os snippets em um arquivo .json">⬇ Exportar</button>
+      <button id="btnImportar" class="botao-header" title="Carregar snippets de um arquivo .json">⬆ Importar</button>
+      <input type="file" id="inputImportar" accept="application/json,.json" style="display:none;">
+    </div>
+  </header>
+
+  <main>
+    <div id="sidebar">
+      <div class="toolbar">
+        <input type="text" id="busca" placeholder="Buscar snippet ou atalho...">
+        <button id="btnNovo">+ Novo</button>
+      </div>
+      <div class="toolbar toolbar-selecao">
+        <label class="chk-todos-label">
+          <input type="checkbox" id="chkTodos">
+          Selecionar todos
+        </label>
+        <button id="btnApagarSelecionados" disabled>🗑 Apagar selecionados (0)</button>
+      </div>
+      <div id="lista"></div>
+    </div>
+
+    <div id="editor">
+      <div id="editor-vazio">
+        <img src="assets/alares.png" alt="">
+        <div>Selecione um snippet na lista ao lado<br>ou clique em <strong>+ Novo</strong> para criar um.</div>
+      </div>
+
+      <div id="editor-form" style="display:none;">
+        <div id="avisoPadrao">📌 Este é um snippet <strong>padrão</strong> e recebe atualizações automáticas. Se você alterar e salvar, ele passa a ser seu e não será mais atualizado.</div>
+        <div class="campo">
+          <label>Atalho</label>
+          <input type="text" id="campoAtalho" placeholder="/saudacao">
+          <div class="dica">Digite esse atalho seguido de espaço ou Tab dentro do WhatsApp Web para expandir automaticamente o texto.</div>
+        </div>
+        <div class="campo">
+          <label>Título (opcional)</label>
+          <input type="text" id="campoTitulo" placeholder="Ex: Saudação inicial">
+        </div>
+        <div class="campo">
+          <label>Conteúdo</label>
+          <textarea id="campoConteudo" placeholder="Digite aqui o texto completo da mensagem..."></textarea>
+          <div class="dica">Use *negrito* como no WhatsApp. Quebras de linha são mantidas.</div>
+        </div>
+        <div class="acoes">
+          <button id="btnSalvar">Salvar</button>
+          <button id="btnExcluir">Excluir</button>
+          <span id="msgSalvo">✔ Salvo</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>Criado por Mometto e Diogo</footer>
+
+  <script src="snippets.js"></script>
+</body>
+</html>
