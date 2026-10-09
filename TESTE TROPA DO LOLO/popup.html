@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Tropa do Leleo</title>
+<style>
+  :root{
+    --bg1: #2d0b4e;
+    --bg2: #7b2ff7;
+    --btn: #45d8b7;
+    --btn-hover: #42a5cc;
+    --text: #f3ebff;
+  }
+  body{
+    margin:0;
+    width:220px;
+    padding:16px;
+    background: url('assets/background.webp') center center / cover no-repeat, var(--bg1);
+    font-family: "Segoe UI", Arial, sans-serif;
+    color:var(--text);
+    box-sizing:border-box;
+  }
+  h1{
+    font-size:14px;
+    margin:0 0 12px;
+    text-align:center;
+    font-weight:600;
+    letter-spacing:.3px;
+  }
+  button{
+    display:block;
+    width:100%;
+    padding:10px 12px;
+    margin-bottom:10px;
+    background:var(--btn);
+    color:var(--text);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:8px;
+    font-size:14px;
+    cursor:pointer;
+    transition: background .15s ease;
+  }
+  button:hover{ background:var(--btn-hover); }
+  button:active{ transform: scale(0.98); }
+  .volume-box{
+    margin-top:2px;
+    padding:8px 4px 2px;
+  }
+  .volume-box label{
+    display:block;
+    font-size:12px;
+    margin-bottom:6px;
+    text-align:center;
+  }
+  #rangeVolume{
+    width:100%;
+    accent-color:var(--btn);
+    cursor:pointer;
+  }
+  #status{
+    font-size:11px;
+    text-align:center;
+    min-height:14px;
+    margin-top:4px;
+    opacity:.85;
+  }
+  footer{
+    margin-top:14px;
+    text-align:center;
+    font-size:10px;
+    opacity:.6;
+  }
+</style>
+</head>
+<body>
+  <h1>Call Center Tools</h1>
+  <div id="tela-principal">
+   <button id="btnProx" class="sua-classe-de-botao">Enviar "prox"</button>
+<button id="btnCheck" class="sua-classe-de-botao">Enviar ✅</button>
+<button id="btn-menu-relatos-mensagens" class="sua-classe-de-botao">Relatos / Mensagens</button>
+<button id="btn-menu-links" class="sua-classe-de-botao">Links</button>
+<button id="btnHuawei" class="sua-classe-de-botao">Configurar x6</button>
+<button id="btnSenhaWifi" class="sua-classe-de-botao">Senha Wi-Fi x6</button>
+<button id="btnSnippets" class="sua-classe-de-botao">📝 Snippets</button>
+<div class="volume-box">
+  <label for="rangeVolume">🔊 Volume do áudio: <span id="volumeValor">70%</span></label>
+  <input type="range" id="rangeVolume" min="0" max="100" step="5" value="70">
+</div>
+</div>
+<div id="tela-secundaria" style="display: none;">
+    <!-- Cabeçalho com botão de voltar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 0 5px;">
+        <span id="btn-voltar" style="color: white; cursor: pointer; font-size: 16px; font-weight: bold; text-decoration: none;">⬅ Voltar</span>
+        <span style="color: white; font-weight: 500;">Escolha a opção:</span>
+    </div>    
+    <!-- Botões da segunda tela -->
+    <button id="btn-relatos" class="sua-classe-de-botao">Relatos</button>
+    <button id="btn-mensagens" class="sua-classe-de-botao">Mensagens</button>
+</div>
+<div id="tela-links" style="display: none;">
+    <!-- Cabeçalho com botão de voltar -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 0 5px;">
+        <span id="btn-voltar-links" style="color: white; cursor: pointer; font-size: 16px; font-weight: bold; text-decoration: none;">⬅ Voltar</span>
+        <span style="color: white; font-weight: 500;">Links:</span>
+    </div>
+    <!-- Os botões são criados pelo popup.js a partir da lista LINKS -->
+    <div id="lista-links"></div>
+</div>
+  <div id="status"></div>
+<div style="text-align: center; margin: 15px 0;">
+    <img src="assets/alares.png" alt="Logo Alares" style="max-width: 120px; height: auto;">
+</div>
+  <div class="footer" style="text-align: center; font-size: 12px; color: #fff;">
+    <p>Criado por Mometto e Diogo</p>
+</div>
+  <script src="popup.js"></script>
+</body>
+</html>
