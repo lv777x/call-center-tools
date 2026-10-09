@@ -98,5 +98,20 @@
     "atalho": "/saude",
     "titulo": "Oquei Saúde",
     "conteudo": "Baixe o aplicativo chamado Mediquo, em seguida faça o login com SMS ou sua conta GMAIL, selecione a opção \"Tenho um código de ativação\", caso não aparecer essa opção e entrar direto na conta, pode ir na opção do \"Perfil\" e selecionar \"Ativar plano premium\" e inserir o código abaixo:\n"
+  },
+  {
+    "atalho": "/r1",
+    "titulo": "Encaminhar ao atendente Responsavel",
+    "conteudo": "Cliente está com outro atendente no chat, encaminhado protocolo para dar andamento!"
+  },
+  {
+    "atalho": "/sc",
+    "titulo": "Sem contato",
+    "conteudo": "Sem contato com a cliente, chamei no chat."
+  },
+  {
+    "atalho": "/sa",
+    "titulo": "Sinal alto",
+    "conteudo": "Identificamos que o sinal da fibra está alto.\n\nO sinal alto da fibra é a intensidade do sinal de luz que viaja através dos fios de fibra, quando está alto, pode causar oscilação, lentidão e até mesmo a falta de conexão.\n\nPor favor, verifique em seus equipamentos se você encontra o cabo de fibra óptica. Geralmente, ele é um cabo fino na cor amarela, com a ponta verde ou azul.\n\n📌 Onde localizar o cabo:\nSe o seu roteador tiver duas antenas, o cabo estará conectado na parte de baixo do roteador.\nSe o roteador tiver mais de duas antenas, o cabo estará conectado ao modem (aparelho menor, sem antenas).\n🔧 Procedimento:\nRetire o cabo com cuidado.\nAguarde 10 segundos.\nConecte o cabo novamente no equipamento."
   }
 ]
