@@ -118,5 +118,15 @@
     "atalho": "/senha",
     "titulo": "troca de senha",
     "conteudo": "Qual seria a nova senha ? lembrando que tem que ter no mínimo 8 dígitos. No momento em que for realizada a mudança da senha, todos os dispositivos conectados à rede vão perder a conexão, vai ser necessário acessar o wi-fi novamente e inserir a nova senha."
+  },
+  {
+    "atalho": "/ot",
+    "titulo": "Usuario cliente",
+    "conteudo": "ABAIXO ESTÁ SEU USUÁRIO E SENHA PARA ACESSAR O OQUEI TV! \ntroque o demo.cdn.tv.br por tv.oquei.com.br \nUSUÁRIO:\nSENHA:."
+  },
+  {
+    "atalho": "/lead",
+    "titulo": "pré cadastro do cliente",
+    "conteudo": "Para encaminharmos sua solicitação ao setor comercial, precisamos confirmar alguns dados básicos:\n Nome completo:\n CPF:\n CEP:\n Endereço:\n Número:\n Bairro:"
   }
 ]
